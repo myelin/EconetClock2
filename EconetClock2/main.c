@@ -229,12 +229,18 @@ int main(void)
 	// when it changes.
     while (1) 
     {
+#ifdef HARDCODE_DIP_SWITCH
+		// Board has no DIP switches mounted; use hardcoded value
+		// instead.
+		currentDipSwitch = HARDCODE_DIP_SWITCH;
+#else
 		// Read the current DIP switch setting
 		currentDipSwitch = 0;
 		
 		if (!(DIPSW1_PIN & DIPSW1)) currentDipSwitch += 1;
 		if (!(DIPSW2_PIN & DIPSW2)) currentDipSwitch += 2;
 		if (!(DIPSW3_PIN & DIPSW3)) currentDipSwitch += 4;
+#endif
 		
 		// Has the DIP switch setting changed?
 		if (currentDipSwitch != previousDipSwitch)
